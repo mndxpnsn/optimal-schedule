@@ -77,6 +77,18 @@ bool checkStatus(vector<int> & D, int d, vector<bool> & vis) {
     return true;
 }
 
+int calcCost(vector<int> & C, vector<int> & P) {
+    
+    int sum = 0;
+    
+    for(auto e : C) {
+        if(e != -1)
+            sum = sum + P[e];
+    }
+    
+    return sum;
+}
+
 void maxPointsBackTrackSchedule(vector<int> & D, vector<int> & P, int d, vector<bool> & vis, vector<int> & C, vector<int> & S, int & out) {
     
     int n = (int) D.size();
@@ -84,15 +96,13 @@ void maxPointsBackTrackSchedule(vector<int> & D, vector<int> & P, int d, vector<
     bool allDone = checkStatus(D, d, vis);
     
     if(d >= n || allDone) {
-        int sum = 0;
-        for(auto e : C) {
-            if(e != -1)
-                sum = sum + P[e];
-        }
+        int sum = calcCost(C, P);
+        
         if(sum >= out) {
             out = sum;
             S = C;
         }
+        
         return;
     }
     
